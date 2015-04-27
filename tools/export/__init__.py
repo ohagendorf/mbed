@@ -141,6 +141,10 @@ def export(project_path, project_name, ide, target, destination='/tmp/',
             zip_path = zip_working_directory_and_clean_up(tempdir, destination, project_name, clean)
         else:
             zip_path = destination
+#        if ide == "simulink":
+#            zip_path = zip_working_directory_and_clean_up(tempdir, destination, project_name, clean, False)
+#        else:
+#            zip_path = zip_working_directory_and_clean_up(tempdir, destination, project_name, clean, True)
 
     return zip_path, report
 

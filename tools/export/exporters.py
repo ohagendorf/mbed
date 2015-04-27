@@ -205,7 +205,7 @@ class Exporter(object):
                 symbols.extend(self.extra_symbols)
         return symbols
 
-def zip_working_directory_and_clean_up(tempdirectory=None, destination=None, program_name=None, clean=True):
+def zip_working_directory_and_clean_up(tempdirectory=None, destination=None, program_name=None, clean=True, program_name_subfolder=True):
     uid = str(uuid.uuid4())
     zipfilename = '%s.zip'%uid
 
@@ -213,13 +213,17 @@ def zip_working_directory_and_clean_up(tempdirectory=None, destination=None, pro
     # make zip
     def zipdir(basedir, archivename):
         assert isdir(basedir)
-        fakeroot = program_name + '/'
+        if program_name_subfolder:
+            fakeroot = program_name + '/'
         with closing(ZipFile(archivename, "w", ZIP_DEFLATED)) as z:
             for root, _, files in os.walk(basedir):
                 # NOTE: ignore empty directories
                 for fn in files:
                     absfn = join(root, fn)
-                    zfn = fakeroot + '/' +  absfn[len(basedir)+len(os.sep):]
+                    if program_name_subfolder:
+                        zfn = fakeroot + '/' +  absfn[len(basedir)+len(os.sep):]
+                    else:
+                        zfn = absfn[len(basedir)+len(os.sep):]
                     z.write(absfn, zfn)
 
     zipdir(tempdirectory, join(destination, zipfilename))

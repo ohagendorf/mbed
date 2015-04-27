@@ -60,9 +60,10 @@ class SIMULINK(Exporter):
             r = getattr(self.resources, r_type)
             if r:
                 for source in r:
-                    to_be_compiled.append(source)
-                    base, ext = splitext(source)
-                    object_files.append(base + '.o')
+                    if not source == "./main.cpp" and not source.startswith("./env/"):
+                        to_be_compiled.append(source)
+                        base, ext = splitext(source)
+                        object_files.append(base + '.o')
 
         libraries = []
         for lib in self.resources.libraries:

@@ -135,7 +135,10 @@ def export(project_path, project_name, ide, target, destination='/tmp/',
         open(os.path.join(tempdir, 'GettingStarted.htm'),'w').write('<meta http-equiv="refresh" content="0; url=http://mbed.org/handbook/Getting-Started-mbed-Exporters#%s"/>'% (ide))
         # copy .hgignore file to exported direcotry as well.
         copy(os.path.join(exporter.TEMPLATE_DIR,'.hgignore'),tempdir)
-        zip_path = zip_working_directory_and_clean_up(tempdir, destination, project_name, clean)
+        if ide == "simulink":
+            zip_path = zip_working_directory_and_clean_up(tempdir, destination, project_name, clean, False)
+        else:
+            zip_path = zip_working_directory_and_clean_up(tempdir, destination, project_name, clean, True)
 
     return zip_path, report
 

@@ -23,7 +23,7 @@ class SIMULINK(Exporter):
     TOOLCHAIN = 'GCC_ARM'
 
     TARGETS = [
-#        'ARCH_MAX',
+        'ARCH_MAX',
 #        'DISCO_F051R8',
 #        'DISCO_F100RB',
 #        'DISCO_F303VC',
@@ -31,6 +31,7 @@ class SIMULINK(Exporter):
 #        'DISCO_F401VC',
         'DISCO_F407VG',
         'DISCO_F429ZI',
+        'DISCO_F746NG',
 #        'DISCO_L053C8',
         'NUCLEO_F401RE',
         'NUCLEO_F411RE',

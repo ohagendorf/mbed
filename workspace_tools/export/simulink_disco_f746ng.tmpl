@@ -1,0 +1,40 @@
+GCC_BIN = 
+
+MBED_OBJECTS = {% for f in object_files %}{{f}} {% endfor %}
+MBED_SOURCEN = {% for f in to_be_compiled %}{{f}} {% endfor %}
+MBED_INCLUDE_PATHS = {% for p in include_paths %}-I{{p}} {% endfor %}
+MBED_LIBRARY_PATHS = {% for p in library_paths %}-L{{p}} {% endfor %}
+MBED_LIBRARIES = {% for lib in libraries %}-l{{lib}} {% endfor %}
+MBED_LINKER_SCRIPT = {{linker_script}}
+
+############################################################################### 
+AS      = $(GCC_BIN)arm-none-eabi-as
+AR      = $(GCC_BIN)arm-none-eabi-ar
+CC      = $(GCC_BIN)arm-none-eabi-gcc
+CXX     = $(GCC_BIN)arm-none-eabi-g++
+LD      = $(GCC_BIN)arm-none-eabi-gcc
+OBJCOPY = $(GCC_BIN)arm-none-eabi-objcopy
+OBJDUMP = $(GCC_BIN)arm-none-eabi-objdump
+SIZE    = $(GCC_BIN)arm-none-eabi-size
+
+ifeq ($(HARDFP),1)
+    FLOAT_ABI = hard
+else
+    FLOAT_ABI = softfp
+endif
+
+CPU = -mcpu=cortex-m7 -mthumb 
+MBED_CC_FLAGS = $(CPU) -c -g -fno-common -fmessage-length=0 -Wall -Wextra -fno-exceptions -ffunction-sections -fdata-sections -fomit-frame-pointer -MMD -MP
+TEST_CC_SYMBOLS = -DMBED_BUILD_TIMESTAMP=1442867331.62 -DTOOLCHAIN_GCC_ARM -DTOOLCHAIN_GCC -DTARGET_STM32F746NG -DTARGET_STM32F746 -DARM_MATH_CM7 -DTARGET_CORTEX_M -D__CORTEX_M7 -DTARGET_DISCO_F746NG -DTARGET_STM -DTARGET_M7 -DTARGET_STM32F7 -D__MBED__=1 
+
+MBED_CC_SYMBOLS = {% for s in symbols %}-D{{s}} {% endfor %}
+
+MBED_LD_FLAGS = $(CPU) -Wl,--gc-sections --specs=nano.specs -u _printf_float -u _scanf_float -Wl,--wrap,main
+MBED_LD_FLAGS += -Wl,-Map=$(MODEL).map,--cref
+MBED_LD_SYS_LIBS = -lstdc++ -lsupc++ -lm -lc -lgcc -lnosys
+
+ifeq ($(DEBUG), 1)
+  CC_FLAGS += -DDEBUG -O0
+else
+  CC_FLAGS += -DNDEBUG -Os
+endif

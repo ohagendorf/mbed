@@ -67,6 +67,15 @@ public:
         core_util_critical_section_exit();
     }
 
+    /** Create a PwmOut connected to the specified pin
+     *
+     *  @param pin PwmOut pin to connect to
+     *  @param idx index into PeripheralPins.c structure
+     */
+    PwmOut(PinName pin, const uint8_t idx=1) {
+        pwmout_init_ex(&_pwm, pin, idx);
+    }
+
     /** Set the ouput duty-cycle, specified as a percentage (float)
      *
      *  @param value A floating-point value representing the output duty-cycle,

@@ -1,9 +1,10 @@
 /* Linker script to configure memory regions. */
 MEMORY
 { 
-  FLASH (rx) : ORIGIN = 0x08000000, LENGTH = 2048k
-  CCM (rwx) : ORIGIN = 0x10000000, LENGTH = 64K
-  RAM (rwx) : ORIGIN = 0x200001AC, LENGTH = 192k - 0x1AC 
+  FLASH (rx)  : ORIGIN = 0x08000000, LENGTH = 2048k
+  CCM (rwx)   : ORIGIN = 0x10000000, LENGTH = 64K
+  RAM (rwx)   : ORIGIN = 0x200001AC, LENGTH = 192k - 0x1AC 
+  SDRAM (rwx) : ORIGIN = 0xD0100000, LENGTH = 7168k /* 7 MB */
 }
 
 /* Linker script to place sections and symbol values. Should be used together
@@ -142,6 +143,13 @@ SECTIONS
         *(.stack*)
     } > RAM
 
+    /* 7MB SDRAM Chip */
+    .sdram (NOLOAD):
+    {
+        . = ALIGN(4);
+        *(.sdram)
+    } > SDRAM
+    
     /* Set stack top to end of RAM, and stack limit move down by
      * size of stack_dummy section */
     __StackTop = ORIGIN(RAM) + LENGTH(RAM);

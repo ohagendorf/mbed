@@ -40,12 +40,16 @@ static TIM_HandleTypeDef TimHandle;
 
 void pwmout_init(pwmout_t* obj, PinName pin)
 {
+    pwmout_init_ex(obj, pin, 1);
+}
+void pwmout_init_ex(pwmout_t* obj, PinName pin, const uint8_t idx)
+{
     // Get the peripheral name from the pin and assign it to the object
-    obj->pwm = (PWMName)pinmap_peripheral(pin, PinMap_PWM);
+    obj->pwm = (PWMName)pinmap_peripheral_ex(pin, PinMap_PWM, idx);
     MBED_ASSERT(obj->pwm != (PWMName)NC);
 
     // Get the functions (timer channel, (non)inverted) from the pin and assign it to the object
-    uint32_t function = pinmap_function(pin, PinMap_PWM);
+    uint32_t function = pinmap_function_ex(pin, PinMap_PWM, idx);
     MBED_ASSERT(function != (uint32_t)NC);
     obj->channel = STM_PIN_CHANNEL(function);
     obj->inverted = STM_PIN_INVERTED(function);
@@ -89,7 +93,7 @@ void pwmout_init(pwmout_t* obj, PinName pin)
 #endif
 
     // Configure GPIO
-    pinmap_pinout(pin, PinMap_PWM);
+    pinmap_pinout_ex(pin, PinMap_PWM, idx);
 
     obj->pin = pin;
     obj->period = 0;
@@ -146,7 +150,7 @@ void pwmout_write(pwmout_t* obj, float value)
     }
 
     if (HAL_TIM_PWM_ConfigChannel(&TimHandle, &sConfig, channel) != HAL_OK) {
-        error("Cannot initialize PWM\n");
+        error("Cannot configure PWM channel\n");
     }
 
     if (obj->inverted) {

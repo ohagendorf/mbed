@@ -36,6 +36,7 @@ class SIMULINK(Exporter):
         'NUCLEO_F401RE',
         'NUCLEO_F411RE',
         'NUCLEO_F446RE',
+        'NUCLEO_F767ZI',
 #        'NUCLEO_F030R8',
         'NUCLEO_F042K6',
 #        'NUCLEO_F070RB',

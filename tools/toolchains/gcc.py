@@ -59,19 +59,11 @@ class GCC(mbedToolchain):
             self.cpu.append("-mfpu=fpv4-sp-d16")
             self.cpu.append("-mfloat-abi=softfp")
 
-<<<<<<< HEAD
         elif target.core == "Cortex-M7" and target.fpu == "single":
             self.cpu.append("-mfpu=fpv5-sp-d16")
             self.cpu.append("-mfloat-abi=softfp")
 
         elif target.core == "Cortex-M7" and target.fpu == "double":
-=======
-        elif target.core == "Cortex-M7F":
-            self.cpu.append("-mfpu=fpv5-sp-d16")
-            self.cpu.append("-mfloat-abi=softfp")
-
-        elif target.core == "Cortex-M7F_DP":
->>>>>>> [Cortex_M7] fpu with single/double precision - bugfix and extension
             self.cpu.append("-mfpu=fpv5-d16")
             self.cpu.append("-mfloat-abi=softfp")
 

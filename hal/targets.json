@@ -1111,8 +1111,21 @@
         "extra_labels": ["STM", "STM32F7", "STM32F746", "STM32F746NG"],
         "supported_toolchains": ["ARM", "uARM", "GCC_ARM", "IAR"],
         "default_toolchain": "ARM",
-        "progen": {"target": "disco-f746ng"},
+        "progen": {"target": "disco-f769ni"},
         "detect_code": ["0815"],
+        "device_has": ["ANALOGIN", "ANALOGOUT", "CAN", "I2C", "I2CSLAVE", "INTERRUPTIN", "PORTIN", "PORTINOUT", "PORTOUT", "PWMOUT", "RTC", "SERIAL", "SLEEP", "SPI", "SPISLAVE", "STDIO_MESSAGES"],
+        "default_build": "standard",
+        "release": true
+    },
+    "DISCO_F769NI": {
+        "inherits": ["Target"],
+        "core": "Cortex-M7",
+        "fpu": "double",
+        "extra_labels": ["STM", "STM32F7", "STM32F769", "STM32F769NI"],
+        "supported_toolchains": ["ARM", "uARM", "GCC_ARM", "IAR"],
+        "default_toolchain": "ARM",
+        "progen": {"target": "disco-f769ni"},
+        "detect_code": ["0817"],
         "device_has": ["ANALOGIN", "ANALOGOUT", "CAN", "I2C", "I2CSLAVE", "INTERRUPTIN", "PORTIN", "PORTINOUT", "PORTOUT", "PWMOUT", "RTC", "SERIAL", "SLEEP", "SPI", "SPISLAVE", "STDIO_MESSAGES"],
         "default_build": "standard",
         "release": true

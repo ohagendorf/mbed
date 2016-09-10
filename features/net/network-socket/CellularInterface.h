@@ -27,6 +27,29 @@
 class CellularInterface : public NetworkInterface
 {
 public:
+    /** CellularInterface lifetime
+     */
+    CellularInterface();
+    virtual ~CellularInterface();
+
+    /** Set the cellular network APN
+     *
+     *  @param apn      Name of the network to connect to
+     */
+    void set_apn(const char *apn);
+
+    /** Set the cellular network username
+     *
+     *  @param pass      Username for the APN
+     */
+    void set_username(const char *username);
+
+    /** Set the cellular network passphrase
+     *
+     *  @param pass      Passphrase for the APN
+     */
+    void set_passphrase(const char *passphrase);
+
     /** Start the interface
      *
      *  @param apn      Optional name of the network to connect to
@@ -34,7 +57,15 @@ public:
      *  @param password Optional password for your APN 
      *  @return         0 on success, negative error code on failure
      */
-    virtual int connect(const char *apn = 0, const char *username = 0, const char *password = 0) = 0;
+    virtual int connect(const char *apn, const char *username = 0, const char *password = 0) = 0;
+
+    /** Start the interface
+     *
+     *  Attempts to connect to a cellular network based on supplied credentials
+     *
+     *  @return         0 on success, negative error code on failure
+     */
+    virtual int connect();
  
     /** Stop the interface
      *
@@ -42,11 +73,10 @@ public:
      */
     virtual int disconnect() = 0;
 
-    /** Get the local MAC address
-     *
-     *  @return         Null-terminated representation of the local MAC address
-     */
-    virtual const char *get_mac_address() = 0;
+private:
+    char *_apn;
+    char *_username;
+    char *_passphrase;
 };
 
  

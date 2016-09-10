@@ -31,6 +31,19 @@ class NetworkStack;
 class EthernetInterface : public EthInterface
 {
 public:
+    /** EthernetInterface lifetime
+     */
+    EthernetInterface();
+
+    /** Enable or disable DHCP on the network
+     *
+     *  Requires that the network is disconnected
+     *
+     *  @param dhcp     False to disable dhcp (defaults to enabled)
+     *  @return         0 on success, negative error code on failure
+     */
+    virtual int set_dhcp(bool dhcp);
+
     /** Start the interface
      *  @return             0 on success, negative on failure
      */
@@ -41,15 +54,37 @@ public:
      */
     virtual int disconnect();
 
-    /** Get the internally stored IP address
-     *  @return             IP address of the interface or null if not yet connected
+    /** Get the local MAC address
+     *
+     *  Provided MAC address is intended for info or debug purposes and
+     *  may not be provided if the underlying network interface does not
+     *  provide a MAC address
+     *  
+     *  @return         Null-terminated representation of the local MAC address
+     *                  or null if no MAC address is available
+     */
+    virtual const char *get_mac_address();
+
+    /** Get the local IP address
+     *
+     *  @return         Null-terminated representation of the local IP address
+     *                  or null if no IP address has been recieved
      */
     virtual const char *get_ip_address();
 
-    /** Get the internally stored MAC address
-     *  @return             MAC address of the interface
+    /** Get the local network mask
+     *
+     *  @return         Null-terminated representation of the local network mask 
+     *                  or null if no network mask has been recieved
      */
-    virtual const char *get_mac_address();
+    virtual const char *get_netmask();
+
+    /** Get the local gateway
+     *
+     *  @return         Null-terminated representation of the local gateway
+     *                  or null if no network mask has been recieved
+     */
+    virtual const char *get_gateway();
 
 protected:
     /** Provide access to the underlying stack
@@ -57,6 +92,8 @@ protected:
      *  @return The underlying network stack 
      */
     virtual NetworkStack *get_stack();
+
+    bool _dhcp;
 };
 
 

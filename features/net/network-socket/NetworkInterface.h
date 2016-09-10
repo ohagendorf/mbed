@@ -17,6 +17,8 @@
 #ifndef NETWORK_INTERFACE_H
 #define NETWORK_INTERFACE_H
 
+#include "network-socket/nsapi_types.h"
+
 // Predeclared class
 class NetworkStack;
 
@@ -27,14 +29,79 @@ class NetworkStack;
  */
 class NetworkInterface {
 public:
+    NetworkInterface();
     virtual ~NetworkInterface() {};
+
+    /** Get the local MAC address
+     *
+     *  Provided MAC address is intended for info or debug purposes and
+     *  may not be provided if the underlying network interface does not
+     *  provide a MAC address
+     *  
+     *  @return         Null-terminated representation of the local MAC address
+     *                  or null if no MAC address is available
+     */
+    virtual const char *get_mac_address();
 
     /** Get the local IP address
      *
      *  @return         Null-terminated representation of the local IP address
-     *                  or null if not yet connected
+     *                  or null if no IP address has been recieved
      */
-    virtual const char *get_ip_address() = 0;
+    virtual const char *get_ip_address();
+
+    /** Get the local network mask
+     *
+     *  @return         Null-terminated representation of the local network mask 
+     *                  or null if no network mask has been recieved
+     */
+    virtual const char *get_netmask();
+
+    /** Get the local gateway
+     *
+     *  @return         Null-terminated representation of the local gateway
+     *                  or null if no network mask has been recieved
+     */
+    virtual const char *get_gateway();
+
+    /** Set the local IP address
+     *
+     *  @param address  Null-terminated representation of the local IP address
+     */
+    virtual void set_ip_address(const char *address);
+
+    /** Set the local network mask
+     *
+     *  @param netmask  Null-terminated representation of the local network mask
+     */
+    virtual void set_netmask(const char *address);
+
+    /** Set the local gateway
+     *
+     *  @param gateway  Null-terminated representation of the local gateway
+     */
+    virtual void set_gateway(const char *address);
+
+    /** Enable or disable DHCP on the network
+     *
+     *  Requires that the network is disconnected
+     *
+     *  @param dhcp     False to disable dhcp (defaults to enabled)
+     *  @return         0 on success, negative error code on failure
+     */
+    virtual int set_dhcp(bool dhcp);
+
+    /** Start the interface
+     *
+     *  @return     0 on success, negative error code on failure
+     */
+    virtual int connect() = 0;
+
+    /** Stop the interface
+     *
+     *  @return     0 on success, negative error code on failure
+     */
+    virtual int disconnect() = 0;
 
 protected:
     friend class Socket;
@@ -50,6 +117,11 @@ protected:
      *  @return The underlying NetworkStack object
      */
     virtual NetworkStack *get_stack() = 0;
+
+    // Local storage of ip addresses provided for convenience
+    char _ip_address[NSAPI_IP_SIZE];
+    char _netmask[NSAPI_IP_SIZE];
+    char _gateway[NSAPI_IP_SIZE];
 };
 
 

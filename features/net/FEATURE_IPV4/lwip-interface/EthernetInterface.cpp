@@ -20,8 +20,17 @@
 
 /* Interface implementation */
 EthernetInterface::EthernetInterface()
+    : _dhcp(false), _ip_address(""), _netmask(""), _gateway("")
 {
-    _dhcp = true;
+}
+
+int EthernetInterface::set_network(const char *ip_address, const char *netmask, const char *gateway)
+{
+    _dhcp = false;
+    strncpy(_ip_address, ip_address ? ip_address : "", sizeof _ip_address);
+    strncpy(_netmask, netmask ? netmask : "", sizeof _netmask);
+    strncpy(_gateway, gateway ? gateway : "", sizeof _gateway);
+    return 0;
 }
 
 int EthernetInterface::set_dhcp(bool dhcp)
@@ -33,9 +42,9 @@ int EthernetInterface::set_dhcp(bool dhcp)
 int EthernetInterface::connect()
 {
     return lwip_bringup(_dhcp,
-            NetworkInterface::get_ip_address(),
-            NetworkInterface::get_netmask(),
-            NetworkInterface::get_gateway());
+            _ip_address[0] ? _ip_address : 0,
+            _netmask[0] ? _netmask : 0,
+            _gateway[0] ? _gateway : 0);
 }
 
 int EthernetInterface::disconnect()

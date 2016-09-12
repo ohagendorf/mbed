@@ -32,23 +32,13 @@ public:
     CellularInterface();
     virtual ~CellularInterface();
 
-    /** Set the cellular network APN
+    /** Set the cellular network APN and credentials
      *
-     *  @param apn      Name of the network to connect to
+     *  @param apn      Optional name of the network to connect to
+     *  @param user     Optional username for the APN
+     *  @param pass     Optional password fot the APN
      */
-    void set_apn(const char *apn);
-
-    /** Set the cellular network username
-     *
-     *  @param pass      Username for the APN
-     */
-    void set_username(const char *username);
-
-    /** Set the cellular network passphrase
-     *
-     *  @param pass      Passphrase for the APN
-     */
-    void set_passphrase(const char *passphrase);
+    virtual int set_credentials(const char *apn, const char *user = 0, const char *pass = 0);
 
     /** Start the interface
      *
@@ -75,8 +65,8 @@ public:
 
 private:
     char *_apn;
-    char *_username;
-    char *_passphrase;
+    char *_user;
+    char *_pass;
 };
 
  

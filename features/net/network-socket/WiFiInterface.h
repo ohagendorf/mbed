@@ -46,24 +46,14 @@ public:
     WiFiInterface();
     virtual ~WiFiInterface();
 
-    /** Set the WiFi network ssid
+    /** Set the WiFi network credentials
      *
      *  @param ssid     Name of the network to connect to
-     */
-    void set_ssid(const char *ssid);
-
-    /** Set the WiFi network passphrase
-     *
      *  @param pass     Security passphrase to connect to the network
-     */
-    void set_passphrase(const char *passphrase);
-
-    /** Set the WiFi network security
-     *
      *  @param security Type of encryption for connection
      *                  (defaults to NSAPI_SECURITY_NONE)
      */
-    void set_security(nsapi_security_t security);
+    virtual int set_credentials(const char *ssid, const char *pass, nsapi_security_t security = NSAPI_SECURITY_NONE);
 
     /** Start the interface
      *
@@ -94,7 +84,7 @@ public:
 
 private:
     char *_ssid;
-    char *_passphrase;
+    char *_pass;
     nsapi_security_t _security;
 };
 

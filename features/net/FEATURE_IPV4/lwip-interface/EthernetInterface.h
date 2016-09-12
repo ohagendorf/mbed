@@ -35,6 +35,19 @@ public:
      */
     EthernetInterface();
 
+    /** Set a static IP address
+     *
+     *  Configures this network interface to use a static IP address.
+     *  Implicitly disables DHCP, which can be enabled in set_dhcp.
+     *  Requires that the network is disconnected.
+     *
+     *  @param address  Null-terminated representation of the local IP address
+     *  @param netmask  Null-terminated representation of the local network mask
+     *  @param gateway  Null-terminated representation of the local gateway
+     *  @return         0 on success, negative error code on failure
+     */
+    virtual int set_network(const char *ip_address, const char *netmask, const char *gateway);
+
     /** Enable or disable DHCP on the network
      *
      *  Requires that the network is disconnected
@@ -94,6 +107,9 @@ protected:
     virtual NetworkStack *get_stack();
 
     bool _dhcp;
+    char _ip_address[NSAPI_IPv4_SIZE];
+    char _netmask[NSAPI_IPv4_SIZE];
+    char _gateway[NSAPI_IPv4_SIZE];
 };
 
 

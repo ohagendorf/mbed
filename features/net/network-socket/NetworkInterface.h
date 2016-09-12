@@ -29,7 +29,6 @@ class NetworkStack;
  */
 class NetworkInterface {
 public:
-    NetworkInterface();
     virtual ~NetworkInterface() {};
 
     /** Get the local MAC address
@@ -64,29 +63,26 @@ public:
      */
     virtual const char *get_gateway();
 
-    /** Set the local IP address
+    /** Set a static IP address
+     *
+     *  Configures this network interface to use a static IP address.
+     *  Implicitly disables DHCP, which can be enabled in set_dhcp.
+     *  Requires that the network is disconnected.
      *
      *  @param address  Null-terminated representation of the local IP address
-     */
-    virtual void set_ip_address(const char *address);
-
-    /** Set the local network mask
-     *
      *  @param netmask  Null-terminated representation of the local network mask
-     */
-    virtual void set_netmask(const char *address);
-
-    /** Set the local gateway
-     *
      *  @param gateway  Null-terminated representation of the local gateway
+     *  @return         0 on success, negative error code on failure
      */
-    virtual void set_gateway(const char *address);
+    virtual int set_network(const char *ip_address, const char *netmask, const char *gateway);
 
     /** Enable or disable DHCP on the network
      *
-     *  Requires that the network is disconnected
+     *  Enables DHCP on connecting the network. Defaults to enabled unless
+     *  a static IP address has been assigned. Requires that the network is
+     *  disconnected.
      *
-     *  @param dhcp     False to disable dhcp (defaults to enabled)
+     *  @param dhcp     True to enable DHCP
      *  @return         0 on success, negative error code on failure
      */
     virtual int set_dhcp(bool dhcp);
@@ -117,11 +113,6 @@ protected:
      *  @return The underlying NetworkStack object
      */
     virtual NetworkStack *get_stack() = 0;
-
-    // Local storage of ip addresses provided for convenience
-    char _ip_address[NSAPI_IP_SIZE];
-    char _netmask[NSAPI_IP_SIZE];
-    char _gateway[NSAPI_IP_SIZE];
 };
 
 

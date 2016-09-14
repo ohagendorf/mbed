@@ -54,7 +54,10 @@ typedef uintptr_t          mem_ptr_t;
 #define SZT_F "uz"
 
 /* ARM/LPC17xx is little endian only */
-#define BYTE_ORDER LITTLE_ENDIAN
+//#ifdef BYTE_ORDER
+//#undef BYTE_ORDER
+//#endif
+//#define BYTE_ORDER LITTLE_ENDIAN
 
 /* Use LWIP error codes */
 #define LWIP_PROVIDE_ERRNO

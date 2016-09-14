@@ -93,7 +93,7 @@ class Makefile(Exporter):
              in self.toolchain.target.extra_labels] +\
             ['makefile/%s.tmpl' % self.NAME.lower()]:
             try:
-                self.gen_file(templatefile, ctx, 'Makefile')
+                self.gen_file(templatefile, ctx, self.OUTPUT)
                 break
             except TemplateNotFound:
                 pass
@@ -108,6 +108,7 @@ class GccArm(Makefile):
     NAME = 'Make-GCC-ARM'
     TOOLCHAIN = "GCC_ARM"
     LINK_SCRIPT_OPTION = "-T"
+    OUTPUT = 'Makefile'
 
 
 class Armc5(Makefile):
@@ -117,6 +118,7 @@ class Armc5(Makefile):
     NAME = 'Make-ARMc5'
     TOOLCHAIN = "ARM"
     LINK_SCRIPT_OPTION = "--scatter"
+    OUTPUT = 'Makefile'
 
 
 class IAR(Makefile):
@@ -126,3 +128,14 @@ class IAR(Makefile):
     NAME = 'Make-IAR'
     TOOLCHAIN = "IAR"
     LINK_SCRIPT_OPTION = "--config"
+    OUTPUT = 'Makefile'
+
+
+class SimulinkGccArm(Makefile):
+    """SIMULINK/GCC ARM specific makefile target"""
+    TARGETS = [target for target, obj in TARGET_MAP.iteritems()
+               if "GCC_ARM" in obj.supported_toolchains]
+    NAME = 'SIMULINK-GCC-ARM'
+    TOOLCHAIN = "GCC_ARM"
+    LINK_SCRIPT_OPTION = "-T"
+    OUTPUT = 'target_tools.mk'

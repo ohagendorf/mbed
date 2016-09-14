@@ -28,7 +28,6 @@ from tools.targets import TARGET_NAMES, EXPORT_MAP, TARGET_MAP
 from project_generator_definitions.definitions import ProGenDef
 
 EXPORTERS = {
-    'uvision': uvision4.Uvision4,
     'uvision4': uvision4.Uvision4,
     'uvision5': uvision5.Uvision5,
     'lpcxpresso': codered.CodeRed,
@@ -46,6 +45,7 @@ EXPORTERS = {
     'sw4stm32'    : sw4stm32.Sw4STM32,
     'e2studio' : e2studio.E2Studio,
     'zip' : zip.ZIP,
+    'simulink': makefile.SimulinkGccArm,
 }
 
 ERROR_MESSAGE_UNSUPPORTED_TOOLCHAIN = """

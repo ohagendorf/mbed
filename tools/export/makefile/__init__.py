@@ -108,7 +108,7 @@ class Makefile(Exporter):
              in self.toolchain.target.extra_labels] +\
             ['makefile/%s.tmpl' % self.TEMPLATE]:
             try:
-                self.gen_file(templatefile, ctx, 'Makefile')
+                self.gen_file(templatefile, ctx, self.OUTPUT)
                 break
             except TemplateNotFound:
                 pass
@@ -169,6 +169,7 @@ class GccArm(Makefile):
     TOOLCHAIN = "GCC_ARM"
     LINK_SCRIPT_OPTION = "-T"
     USER_LIBRARY_FLAG = "-L"
+    OUTPUT = 'Makefile'
 
     @staticmethod
     def prepare_lib(libname):
@@ -188,6 +189,7 @@ class Armc5(Makefile):
     TOOLCHAIN = "ARM"
     LINK_SCRIPT_OPTION = "--scatter"
     USER_LIBRARY_FLAG = "--userlibpath "
+    OUTPUT = 'Makefile'
 
     @staticmethod
     def prepare_lib(libname):
@@ -207,6 +209,7 @@ class IAR(Makefile):
     TOOLCHAIN = "IAR"
     LINK_SCRIPT_OPTION = "--config"
     USER_LIBRARY_FLAG = "-L"
+    OUTPUT = 'Makefile'
 
     @staticmethod
     def prepare_lib(libname):
@@ -219,3 +222,22 @@ class IAR(Makefile):
         if "lib" == libname[:3]:
             libname = libname[3:]
         return "-l" + splitext(libname)[0]
+
+class SimulinkGccArm(Makefile):
+    """SIMULINK/GCC ARM specific makefile target"""
+    TARGETS = [target for target, obj in TARGET_MAP.iteritems()
+               if "GCC_ARM" in obj.supported_toolchains]
+    NAME = 'SIMULINK-GCC-ARM'
+    TEMPLATE = 'simulink-gcc-arm'
+    TOOLCHAIN = "GCC_ARM"
+    LINK_SCRIPT_OPTION = "-T"
+    USER_LIBRARY_FLAG = "-L"
+    OUTPUT = 'target_tools.mk'
+
+    @staticmethod
+    def prepare_lib(libname):
+        return "-l:" + libname
+
+    @staticmethod
+    def prepare_sys_lib(libname):
+        return "-l" + libname

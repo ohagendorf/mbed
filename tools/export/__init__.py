@@ -56,7 +56,8 @@ EXPORTERS = {
     'eclipse_armc5'    : cdt.EclipseArmc5,
     'gnuarmeclipse': gnuarmeclipse.GNUARMEclipse,
     'zip' : zip.ZIP,
-    'cmsis'    : cmsis.CMSIS
+    'cmsis'    : cmsis.CMSIS,
+    'simulink': makefile.SimulinkGccArm
 }
 
 ERROR_MESSAGE_UNSUPPORTED_TOOLCHAIN = """

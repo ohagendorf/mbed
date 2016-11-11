@@ -62,6 +62,7 @@ EXPORTERS = {
     'vscode_gcc_arm' : vscode.VSCodeGcc,
     'vscode_iar' : vscode.VSCodeIAR,
     'vscode_armc5' : vscode.VSCodeArmc5
+    'simulink': makefile.SimulinkGccArm
 }
 
 ERROR_MESSAGE_UNSUPPORTED_TOOLCHAIN = """

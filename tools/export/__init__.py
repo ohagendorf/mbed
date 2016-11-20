@@ -104,3 +104,21 @@ def mcu_ide_matrix(verbose_html=False):
     if verbose_html:
         result = result.replace("&amp;", "&")
     return result
+
+def mcu_list():
+    """Shows target map using prettytable
+
+    Keyword argumets:
+    """
+    supported_ides = sorted(EXPORTERS.keys())
+    # Only use it in this function so building works without extra modules
+
+    result = ""
+    # All tests status table print
+    for target in sorted(TARGET_NAMES):
+      if target in EXPORTERS["make_gcc_arm"].TARGETS:
+        result += target  # First column is platform name
+        result += "\n"
+
+    result += "\n"
+    return result

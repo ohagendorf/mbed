@@ -12,7 +12,7 @@ from os.path import normpath, realpath
 
 from tools.paths import EXPORT_DIR, MBED_HAL, MBED_LIBRARIES, MBED_TARGETS_PATH
 from tools.settings import BUILD_DIR
-from tools.export import EXPORTERS, mcu_ide_matrix
+from tools.export import EXPORTERS, mcu_ide_matrix, mcu_list
 from tools.tests import TESTS, TEST_MAP
 from tools.tests import test_known, test_name_known, Test
 from tools.targets import TARGET_NAMES
@@ -151,6 +151,12 @@ def main():
                        default=False,
                        help="displays supported matrix of MCUs and IDEs")
 
+    group.add_argument("-T", "--list-targets",
+                       action="store_true",
+                       dest="supported_targets",
+                       default=False,
+                       help="displays supported list of MCUs")
+
     parser.add_argument("-E",
                         action="store_true",
                         dest="supported_ides_html",
@@ -193,8 +199,13 @@ def main():
         exit(0)
 
     # Only prints matrix of supported IDEs
+    if options.supported_targets:
+        print_large_string(mcu_list())
+        exit(0)
+
+    # Only prints matrix of supported IDEs
     if options.supported_ides_html:
-        html = mcu_ide_matrix(verbose_html=True)
+        html = mcu_ide_matrix(verbose_html=Truemcu_list)
         try:
             with open("./export/README.md", "w") as readme:
                 readme.write("Exporter IDE/Platform Support\n")

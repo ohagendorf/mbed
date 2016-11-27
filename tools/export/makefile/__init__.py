@@ -211,3 +211,7 @@ class SimulinkGccArm(Makefile):
     LINK_SCRIPT_OPTION = "-T"
     USER_LIBRARY_FLAG = "-L"
     OUTPUT = 'target_tools.mk'
+
+    @staticmethod
+    def prepare_lib(libname):
+        return "-l:" + libname

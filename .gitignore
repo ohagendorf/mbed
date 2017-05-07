@@ -22,6 +22,8 @@ venv/
 
 # C extensions
 *.so
+*.o
+*.d
 
 # Packages
 *.egg

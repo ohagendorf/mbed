@@ -99,6 +99,8 @@ class GCC(mbedToolchain):
 
         self.ar = join(tool_path, "arm-none-eabi-ar")
         self.elf2bin = join(tool_path, "arm-none-eabi-objcopy")
+        self.objdump = join(tool_path, "arm-none-eabi-objdump")
+        self.size = join(tool_path, "arm-none-eabi-size")
 
     def parse_dependencies(self, dep_path):
         dependencies = []

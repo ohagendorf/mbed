@@ -32,6 +32,7 @@ from tools.export import lpcxpresso, ds5_5, iar, makefile
 from tools.export import embitz, coide, kds, simplicity, atmelstudio
 from tools.export import sw4stm32, e2studio, zip, cmsis, uvision, cdt
 from tools.export import gnuarmeclipse
+from tools.export import simulink
 from tools.targets import TARGET_NAMES
 
 EXPORTERS = {
@@ -57,7 +58,7 @@ EXPORTERS = {
     'gnuarmeclipse': gnuarmeclipse.GNUARMEclipse,
     'zip' : zip.ZIP,
     'cmsis'    : cmsis.CMSIS,
-    'simulink': makefile.SimulinkGccArm
+    'simulink': simulink.SimulinkGccArm
 }
 
 ERROR_MESSAGE_UNSUPPORTED_TOOLCHAIN = """

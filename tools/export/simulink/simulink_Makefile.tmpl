@@ -22,6 +22,9 @@ CC      = {{cc_cmd}}
 CPP     = {{cppc_cmd}}
 LD      = {{ld_cmd}}
 ELF2BIN = {{elf2bin_cmd}}
+OBJCOPY = {{elf2bin_cmd}}
+OBJDUMP = {{objdump_cmd}}
+SIZE    = {{size_cmd}}
 {% if hex_files %}
 SREC_CAT = srec_cat
 {%- endif %}

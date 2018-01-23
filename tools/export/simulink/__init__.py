@@ -21,7 +21,7 @@ import sys
 from subprocess import check_output, CalledProcessError, Popen, PIPE
 import shutil
 from jinja2.exceptions import TemplateNotFound
-from tools.export.exporters import Exporter, filter_supported
+from tools.export.exporters import Exporter
 from tools.utils import NotSupportedException
 from tools.targets import TARGET_MAP
 
@@ -127,7 +127,7 @@ class Simulink(Exporter):
             except TemplateNotFound:
                 pass
         else:
-            raise NotSupportedException("This make tool is in development")
+            raise NotSupportedException("This make tool is in developmentxx")
 
     @staticmethod
     def build(project_name, log_name="build_log.txt", cleanup=True):

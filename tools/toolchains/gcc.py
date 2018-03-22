@@ -111,6 +111,8 @@ class GCC(mbedToolchain):
 
         self.ar = join(tool_path, "arm-none-eabi-ar")
         self.elf2bin = join(tool_path, "arm-none-eabi-objcopy")
+        self.objdump = join(tool_path, "arm-none-eabi-objdump")
+        self.size = join(tool_path, "arm-none-eabi-size")
 
     def is_not_supported_error(self, output):
         return "error: #error [NOT_SUPPORTED]" in output

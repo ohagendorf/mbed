@@ -1,0 +1,47 @@
+# mbed settings
+###############################################################################
+# Objects and Paths
+
+{% for obj in to_be_compiled %}MBED_OBJECTS += {{obj}}
+{% endfor %}
+{% for obj in object_files %}MBED_SYS_OBJECTS += {{obj}}
+{% endfor %}
+{% for path in include_paths %}MBED_INCLUDE_PATHS += -I{{path}}
+{% endfor %}
+MBED_LIBRARY_PATHS :={% for p in library_paths %} -L{{p}} {% endfor %}
+MBED_LIBRARIES :={% for lib in libraries %} -l{{lib}} {% endfor %}
+MBED_LINKER_SCRIPT := {{linker_script}}
+{%- block additional_variables -%}{% endblock %}
+
+# Objects and Paths
+###############################################################################
+# Tools and Flags
+
+AS      = '$(PATH)'{{asm_cmd}}
+CC      = '$(PATH)'{{cc_cmd}}
+CPP     = '$(PATH)'{{cppc_cmd}}
+LD      = '$(PATH)'{{ld_cmd}}
+ELF2BIN = '$(PATH)'{{elf2bin_cmd}}
+OBJCOPY = '$(PATH)'{{elf2bin_cmd}}
+OBJDUMP = $(PATH){{objdump_cmd}}
+SIZE    = $(PATH){{size_cmd}}
+{% if pp_cmd -%}
+PREPROC = '$(PATH)'{{pp_cmd}}
+{%- endif %}
+{% if hex_files %}
+SREC_CAT = srec_cat
+{%- endif %}
+{%- block additional_executables -%}{%- endblock %}
+
+{% for flag in c_flags %}MBED_CC_FLAGS += {{flag}}
+{% endfor %}
+{% for flag in cxx_flags %}MBED_CPPC_FLAGS += {{flag}}
+{% endfor %}
+{% for flag in asm_flags %}MBED_ASM_FLAGS += {{flag}}
+{% endfor %}
+
+MBED_LD_FLAGS :={%- block ld_flags -%} {{ld_flags|join(" ")}} {% endblock %}
+{% block sys_libs -%}{%- endblock %}
+
+# Tools and Flags
+###############################################################################

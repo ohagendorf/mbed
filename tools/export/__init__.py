@@ -35,6 +35,7 @@ from tools.export import gnuarmeclipse
 from tools.export import qtcreator
 from tools.export import cmake
 from tools.export import nb
+from tools.export import simulink
 from tools.targets import TARGET_NAMES
 
 EXPORTERS = {
@@ -65,7 +66,8 @@ EXPORTERS = {
     'vscode_gcc_arm' : vscode.VSCodeGcc,
     'vscode_iar' : vscode.VSCodeIAR,
     'vscode_armc5' : vscode.VSCodeArmc5,
-    'cmake_gcc_arm': cmake.GccArm
+    'cmake_gcc_arm': cmake.GccArm,
+    'simulink': simulink.SimulinkGccArm
 }
 
 ERROR_MESSAGE_UNSUPPORTED_TOOLCHAIN = """
